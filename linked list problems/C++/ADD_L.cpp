@@ -20,6 +20,133 @@ void printLinkedList(struct Node* head )
 	cout<<endl;
 }
 
+void add_at_pos(struct Node *head)
+	{
+		cout<<"Please enter the data to insert"<<endl;
+		int data;
+		cin>>data;
+		cout<<"please enter the position"<<endl;
+		int pos;
+		cin>>pos;
+
+		struct Node *temp = head;
+		int curr_pos = 0;
+		struct Node *new_node = (struct Node*) malloc (sizeof(struct Node));
+		new_node->data = data;
+		new_node->next = NULL;
+
+		while(temp!=NULL)
+		{
+			if (pos==0)
+			{
+				new_node->next = head;
+				head = new_node;
+				break;
+			}
+
+			if(curr_pos+1==pos)
+			{
+				new_node->next = temp->next;
+				temp->next = new_node;
+				curr_pos+=1;
+				break;
+			}
+			else
+			{
+				temp = temp->next;
+				curr_pos += 1;
+			}
+
+		}
+
+		if ( (pos<0) || (curr_pos!=pos) )
+			cout<<"The index is out bound"<<endl;
+		else
+			cout<<"The data has been inserted successfully"<<endl;
+	
+		printLinkedList(head);
+
+	}
+
+
+void del_at_pos(struct Node *head)
+{
+
+	cout<<"please enter the position to delete an item"<<endl;
+	int pos;
+	cin>>pos;
+	int curr_pos = 0;
+
+	struct Node *temp = head;
+
+	while(temp->next!=NULL)
+	{
+		if (pos==0)
+		{
+			head = head->next;
+			break;
+		}
+		if (curr_pos+1==pos)
+		{
+			temp->next = temp->next->next;
+			curr_pos+= 1;
+			break;
+		}
+		else
+		{
+			temp= temp->next;
+			curr_pos+= 1;
+		}
+	}
+
+	if ((pos<0) || (curr_pos!=pos) )
+		cout<<"the index is out of bound"<<endl;
+	else
+		cout<<"The data at the position is deleted"<<endl;
+
+	printLinkedList(head);
+
+}
+
+void del_match(struct Node *head)
+{
+	cout<<"please enter the data to delete"<<endl;
+	int data;
+	cin>>data;
+	int pos=0;
+	if(head->data == data)
+	{
+		head = head->next;
+		cout<<"The data has been found at pos "<<pos<<" and deleted"<<endl;
+		printLinkedList(head);
+		return;
+	}
+	struct Node *temp = head;
+
+	while(temp->next!=NULL)
+	{
+
+		if (temp->next->data == data)
+		{	
+			pos+=1;
+			temp->next = temp->next->next;
+			cout<<"The data has been found at pos "<<pos<<" and deleted"<<endl;
+			printLinkedList(head);
+			return;
+		}
+		else
+		{
+			temp = temp->next;
+			pos+= 1;
+
+		}		
+	}
+	
+	cout<<"data is not found in the list"<<endl;
+
+}
+
+
 void createLinkedList()
 {
 	struct Node *head = NULL;
@@ -62,6 +189,9 @@ void createLinkedList()
 	}
 
 	printLinkedList(head);
+	// add_at_pos(head);
+	// del_at_pos(head);
+	del_match(head);
 	
 }
 
@@ -70,5 +200,6 @@ void createLinkedList()
 int main()
 {
 	createLinkedList();
+
 	return 0;
 }

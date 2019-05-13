@@ -15,6 +15,96 @@ func main() {
 	createLinkedList()
 }
 
+func del_at_pos(head* Node) {
+	scanner := bufio.NewScanner(os.Stdin)
+	fmt.Println("Please enter the position to delete");
+	scanner.Scan()
+	text := scanner.Text()
+	pos, err := strconv.Atoi(text)
+	temp := head
+	if err != nil {
+		return
+	}
+	curr_pos := 0
+
+	for {
+
+		if pos == 0 {
+			head = head.next
+			break
+		}
+		if temp.next !=nil {
+			if curr_pos+1 == pos {
+				curr_pos+=1
+				temp.next = temp.next.next
+				break
+			} else {
+				temp = temp.next
+				curr_pos+=1
+			}
+		} else {
+			break
+		}
+	}
+
+	if pos<0 || curr_pos !=pos {
+		fmt.Println("the index is out of bound")
+	} else {
+		fmt.Println("the data at the position is deleted")
+	}
+
+	printLinkedList(head)
+
+}
+func add_at_pos(head* Node) {
+	scanner := bufio.NewScanner(os.Stdin)
+	fmt.Println("Please enter the data to insert");
+	scanner.Scan()
+	text := scanner.Text()
+	data, err := strconv.Atoi(text)
+	fmt.Println("Please enter the position")
+	scanner.Scan()
+	pos_text := scanner.Text()
+	pos, err := strconv.Atoi(pos_text)
+	
+	if err != nil {
+		return
+	}
+	curr_pos := 0
+	var new_node = Node{data,nil}
+	temp := head
+
+	for {
+		if pos == 0 {
+			new_node.next = head
+			head = &new_node
+			break
+		}
+
+		if temp != nil {
+
+			if pos == curr_pos+1 {
+				new_node.next = temp.next
+				temp.next = &new_node
+				curr_pos+=1
+				break
+			} else {
+				temp = temp.next
+				curr_pos+=1
+			}
+		} else {
+			break
+		}
+	}
+
+	if pos != curr_pos || pos<0 {
+		fmt.Println("The index is out bound")
+	}else {
+		fmt.Println("The data has been inserted successfully")
+	}
+	printLinkedList(head)
+
+}
 func createLinkedList() {
 
 	var head* Node = nil
@@ -54,6 +144,9 @@ func createLinkedList() {
 	}
 
 	printLinkedList(head)
+	// add_at_pos(head)
+	// del_at_pos(head)
+	del_match(head)
 }
 
 func printLinkedList(head *Node){
@@ -69,4 +162,46 @@ func printLinkedList(head *Node){
 	}
 	fmt.Println()
 
+}
+
+func del_match(head* Node) {
+	scanner := bufio.NewScanner(os.Stdin)
+	fmt.Println("Please enter the data to delete");
+	scanner.Scan()
+	text := scanner.Text()
+	data, err := strconv.Atoi(text)
+
+	if err != nil {
+		return
+	}
+
+	curr_pos := 0
+	temp := head
+
+	if head.data == data {
+		head = head.next
+		fmt.Println("The data is found at ",curr_pos," and deleted")
+		printLinkedList(head)
+		return
+	}
+
+	for {
+		if temp.next!=nil {
+
+			if temp.next.data == data {
+				curr_pos+=1;
+				temp.next = temp.next.next
+				fmt.Println("The data is found at ",curr_pos, " and deleted")
+				printLinkedList(head)
+				return
+			} else {
+				temp = temp.next
+				curr_pos+=1
+			}
+		} else {
+			break
+		}
+	}
+
+	fmt.Println("The data is not found in the list")
 }
