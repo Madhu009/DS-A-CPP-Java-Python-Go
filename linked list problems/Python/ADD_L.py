@@ -118,7 +118,9 @@ def createLinkedList():
 	printLinkedList(head)
 	# add_at_pos(head)
 	# del_at_pos(head)
-	del_match(head)
+	# del_match(head)
+	# reverse(head)
+	remove_duplicates(head)
 
 def printLinkedList(head):
 	temp = head
@@ -129,6 +131,34 @@ def printLinkedList(head):
 
 	print()
 
+def reverse(head):
+	curr,next,prev = head,None,None
+
+	while curr.next!=None:
+		next = curr.next
+		curr.next = prev
+		prev = curr
+		curr = next
+
+	curr.next = prev
+	head = curr
+	print("the reverse list is ")
+	printLinkedList(head)
+
+def remove_duplicates(head):
+	temp, curr = head,head
+
+	while curr.next!=None:
+		while temp.next!=None:
+			if curr.data == temp.next.data:
+				temp.next = temp.next.next
+			else:
+				temp = temp.next
+		if curr.next!=None:
+			curr = curr.next
+			temp = curr
+	print("The final list is ")
+	printLinkedList(head)
 
 if __name__== "__main__":
   createLinkedList()

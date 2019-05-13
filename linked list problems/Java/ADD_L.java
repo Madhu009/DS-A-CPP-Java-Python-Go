@@ -60,8 +60,29 @@ class ADD_L
 		// add_at_pos(head);
 		// del_at_pos(head);
 		// del_match(head);
-		find_match_position(head);
+		// find_match_position(head);
+		// reverse(head);
+		remove_duplicates(head);
 		
+	}
+
+	public static void reverse(Node head)
+	{
+		Node curr = head;
+		Node next = null;
+		Node prev = null;
+
+		while(curr.next!=null)
+		{
+			next = curr.next;
+			curr.next = prev;
+			prev = curr;
+			curr = next;
+		}
+		curr.next = prev;
+		head = curr;
+		System.out.print("The reverse list is ");
+		printLinkedList(head);
 	}
 
 	public static void add_at_pos(Node head)
@@ -214,6 +235,36 @@ class ADD_L
 
 		System.out.println("data is not found in the list");
 	}
+
+
+public static void remove_duplicates(Node head)
+{
+	Node curr = head;
+	Node temp = head;
+
+	while (curr.next!=null)
+	{
+		while(temp.next!=null)
+		{
+			if (temp.next.data == curr.data)
+			{
+				temp.next = temp.next.next;
+			}
+			else
+			{
+				temp = temp.next;
+			}
+		}
+
+		if (curr.next!=null)
+		{
+			curr = curr.next;
+			temp = curr;
+		}
+	}
+	System.out.println("The final list is ");
+	printLinkedList(head);
+}
 
 	public static void printLinkedList(Node head)
 	{

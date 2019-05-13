@@ -20,6 +20,25 @@ void printLinkedList(struct Node* head )
 	cout<<endl;
 }
 
+void reverse(struct Node* head)
+{
+	struct Node* curr = head;
+	struct Node* prev = NULL;
+	struct Node* next = NULL;
+
+	while(curr->next!=NULL)
+	{
+		next = curr->next;
+		curr->next = prev;
+		prev = curr;
+		curr = next;
+	}
+	curr->next = prev;
+	head = curr;
+	cout<<"The reversed list is "<<endl;
+	printLinkedList(head);
+}
+
 void add_at_pos(struct Node *head)
 	{
 		cout<<"Please enter the data to insert"<<endl;
@@ -146,6 +165,34 @@ void del_match(struct Node *head)
 
 }
 
+void remove_duplicates(struct Node *head)
+{
+	struct Node *curr = head;
+	struct Node *temp = head;
+
+	while (curr->next!=NULL)
+	{
+		while(temp->next!=NULL)
+		{
+			if (temp->next->data == curr->data)
+			{
+				temp->next = temp->next->next;
+			}
+			else
+			{
+				temp = temp->next;
+			}
+		}
+
+		if (curr->next!=NULL)
+		{
+			curr = curr->next;
+			temp = curr;
+		}
+	}
+	cout<<"The final list is "<<endl;
+	printLinkedList(head);
+}
 
 void createLinkedList()
 {
@@ -191,7 +238,9 @@ void createLinkedList()
 	printLinkedList(head);
 	// add_at_pos(head);
 	// del_at_pos(head);
-	del_match(head);
+	// del_match(head);
+	// reverse(head);
+	remove_duplicates(head);
 	
 }
 

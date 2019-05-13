@@ -146,7 +146,9 @@ func createLinkedList() {
 	printLinkedList(head)
 	// add_at_pos(head)
 	// del_at_pos(head)
-	del_match(head)
+	// del_match(head)
+	// reverse(head)
+	remove_duplicates_1(head)
 }
 
 func printLinkedList(head *Node){
@@ -204,4 +206,62 @@ func del_match(head* Node) {
 	}
 
 	fmt.Println("The data is not found in the list")
+}
+
+func reverse(head* Node) {
+
+	var next* Node = nil
+	var prev* Node = nil
+
+	curr:= head
+
+	for {
+		if curr.next!=nil {
+			next = curr.next
+			curr.next = prev
+			prev = curr
+			curr = next
+		} else {
+			curr.next = prev
+			head = curr
+			break
+		}
+	}
+
+	fmt.Println("The reversed list is ")
+	printLinkedList(head)
+}
+
+
+func remove_duplicates_1(head* Node) {
+
+	temp:= head
+	curr:= head
+
+	for {
+		if curr.next!=nil {
+			for {
+				fmt.Println("curr2",curr,temp)
+				if temp.next!= nil{
+					if curr.data == temp.next.data {
+						temp.next = temp.next.next
+					} else {
+						temp = temp.next
+					}
+				} else {
+					break
+				}
+			}
+			if curr.next!=nil {
+				curr = curr.next
+				temp = curr
+			}
+			
+		} else {
+			break
+		}
+	}
+
+	fmt.Println("The final list is ")
+	printLinkedList(head)
 }
