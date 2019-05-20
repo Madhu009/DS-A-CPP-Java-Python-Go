@@ -17,10 +17,13 @@ class ADD_L
 
 	public static void main(String args[])
 	{
-		createLinkedList();
+		Node head = createLinkedList();
+		System.out.println("the head node is "+head.data);
+		create_loop(head);
+
 	}
 
-	public static void createLinkedList()
+	public static Node createLinkedList()
 	{
 		Node head = null;
 		System.out.println("Please continue entering the data to the linkedlist and type done to stop it ");
@@ -62,7 +65,9 @@ class ADD_L
 		// del_match(head);
 		// find_match_position(head);
 		// reverse(head);
-		remove_duplicates(head);
+		// remove_duplicates(head);
+		// print_mid(head);
+		return head;
 		
 	}
 
@@ -85,6 +90,18 @@ class ADD_L
 		printLinkedList(head);
 	}
 
+	public static void print_mid(Node head) {
+		Node slow = head;
+		Node fast = head;
+		while(fast.next!=null)
+		{
+			slow = slow.next;
+			fast = fast.next.next;
+			if (fast==null)
+				break;
+		}
+		System.out.println("The middle element of the list is "+ slow.data);
+	}
 	public static void add_at_pos(Node head)
 	{	
 		Scanner scanner = new Scanner(System.in);
@@ -237,34 +254,34 @@ class ADD_L
 	}
 
 
-public static void remove_duplicates(Node head)
-{
-	Node curr = head;
-	Node temp = head;
-
-	while (curr.next!=null)
+	public static void remove_duplicates(Node head)
 	{
-		while(temp.next!=null)
-		{
-			if (temp.next.data == curr.data)
-			{
-				temp.next = temp.next.next;
-			}
-			else
-			{
-				temp = temp.next;
-			}
-		}
+		Node curr = head;
+		Node temp = head;
 
-		if (curr.next!=null)
+		while (curr.next!=null)
 		{
-			curr = curr.next;
-			temp = curr;
+			while(temp.next!=null)
+			{
+				if (temp.next.data == curr.data)
+				{
+					temp.next = temp.next.next;
+				}
+				else
+				{
+					temp = temp.next;
+				}
+			}
+
+			if (curr.next!=null)
+			{
+				curr = curr.next;
+				temp = curr;
+			}
 		}
+		System.out.println("The final list is ");
+		printLinkedList(head);
 	}
-	System.out.println("The final list is ");
-	printLinkedList(head);
-}
 
 	public static void printLinkedList(Node head)
 	{
@@ -276,6 +293,54 @@ public static void remove_duplicates(Node head)
 			temp= temp.next;
 		}
 		System.out.println();
+	}
+
+	public static void create_loop(Node head)
+	{
+		int curr_pos =0;
+		int index;
+		Node loop_node = null;
+		Node temp=head;
+		System.out.println("Please enter the index where you wanna create a loop");
+		Scanner sc = new Scanner(System.in);
+		index = sc.nextInt();
+
+		while(temp!= null)
+		{
+			if (curr_pos==index)
+				loop_node = temp;
+
+			temp = temp.next;
+			curr_pos+=1;
+
+			if (temp.next==null)
+			{
+				if (curr_pos==index)
+					loop_node = temp;
+				temp.next = loop_node;
+				break;
+			}
+		}
+
+		System.out.println("The loop node is "+loop_node.data);
+		find_loop(head);
+	}
+
+	public static void find_loop(Node head)
+	{
+		Node slow = head;
+		Node fast = head.next;
+		while(fast.next!=null)
+		{
+			slow = slow.next;
+			fast=fast.next.next;
+
+			if(fast==slow)
+			{
+				System.out.println("The loop is found at "+fast.data);			
+				break;
+			}
+		}
 	}
 }
 

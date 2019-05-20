@@ -194,7 +194,24 @@ void remove_duplicates(struct Node *head)
 	printLinkedList(head);
 }
 
-void createLinkedList()
+void print_mid(struct Node *head) 
+{
+	struct Node *slow = head;
+	struct Node *fast = head;
+
+	while (fast->next!=NULL)
+	{
+		slow = slow->next;
+		fast = fast->next->next;
+		if (fast==NULL)
+			break;
+	}
+
+	cout<<"the middle element in the list is " <<slow->data<<endl;
+}
+
+
+struct Node* createLinkedList()
 {
 	struct Node *head = NULL;
 	bool done = false;
@@ -235,20 +252,67 @@ void createLinkedList()
 
 	}
 
-	printLinkedList(head);
+	// printLinkedList(head);
 	// add_at_pos(head);
 	// del_at_pos(head);
 	// del_match(head);
 	// reverse(head);
-	remove_duplicates(head);
-	
+	// remove_duplicates(head);
+	return head;
+	// print_mid(head);
+
 }
 
+void find_loop(struct Node *head)
+{
+	struct Node *slow = head;
+	struct Node *fast = head->next;
 
+	while(fast->next!=NULL)
+	{
+		slow = slow->next;
+		fast = fast->next->next;
+
+		if (fast==slow)
+		{
+			cout<<"The loop is found at "<<fast->data<<endl;
+			break;
+		}
+	}
+}
+void create_loop(struct Node *head)
+{
+	struct Node *loop_node = NULL;
+	struct Node *temp = head;
+	cout<<"Please enter the index where you wanna create a loop"<<endl;
+
+	int index;
+	int curr_pos =0;
+	cin>>index;
+
+	while(temp->next!=NULL)
+	{
+		if (curr_pos==index)
+		{
+			loop_node = temp;
+		}
+		temp = temp->next;
+		curr_pos+=1;
+	}
+
+	if (curr_pos==index)
+		loop_node = temp;
+
+	temp->next = loop_node;
+	cout<<"The loop node is "<<loop_node->data<<endl;
+	find_loop(head);
+}
 
 int main()
 {
-	createLinkedList();
+	struct Node *head = createLinkedList();
+	printLinkedList(head);
+	create_loop(head);
 
 	return 0;
 }

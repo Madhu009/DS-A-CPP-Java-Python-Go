@@ -115,12 +115,26 @@ def createLinkedList():
 
 		print("New node {} is added to the linked list and type done to stop it".format(data))
 
-	printLinkedList(head)
+	# printLinkedList(head)
 	# add_at_pos(head)
 	# del_at_pos(head)
 	# del_match(head)
 	# reverse(head)
-	remove_duplicates(head)
+	# remove_duplicates(head)
+	# print_mid(head)
+	return head
+
+
+
+
+def print_mid(head):
+	slow, fast = head, head
+	while fast.next!=None:
+		slow = slow.next
+		fast = fast.next.next
+		if fast == None:
+			break
+	print("the middle element of the list is ",slow.data)
 
 def printLinkedList(head):
 	temp = head
@@ -160,5 +174,35 @@ def remove_duplicates(head):
 	print("The final list is ")
 	printLinkedList(head)
 
+def create_loop(head):
+	
+	loop_node, temp = None,head
+	print("please enter the index where you wanna create a loop")
+	curr_pos = 0
+	index = int(input())
+
+	while temp.next!=None:
+		if curr_pos==index:
+			loop_node = temp
+		temp = temp.next
+		curr_pos+=1
+
+	if curr_pos==index:
+		loop_node = temp
+
+	temp.next = loop_node
+	print("the loop node is ", loop_node.data)
+	find_loop(head)
+
+def find_loop(head):
+	slow,fast = head,head.next
+	while fast.next!=None:
+		slow = slow.next
+		fast = fast.next.next
+		if fast == slow:
+			print("The loop is found at ",fast.data)
+			break
+
 if __name__== "__main__":
-  createLinkedList()
+  head = createLinkedList()
+  create_loop(head)
