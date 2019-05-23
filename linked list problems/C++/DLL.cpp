@@ -181,13 +181,34 @@ struct Node* delete_pos(struct Node *head)
 
 }
 
+struct Node* reverse(struct Node *head)
+{
+	struct Node *prev = NULL;
+	struct Node *curr = head;
+	struct Node *next =NULL;
+
+	while(curr!=NULL)
+	{
+		next = curr->next;
+		curr->next = curr->prev;
+		curr->prev = next;
+		prev = curr;
+		curr = next;
+	}
+
+	head = prev;
+	return head;
+}
+
 int main()
 {
 	struct Node *head = create_dll();
 	printLinkedList(head);
 	// struct Node *test = insert_pos(head);
 	// printLinkedList(test);
-	struct Node *test = delete_pos(head);
+	// struct Node *test = delete_pos(head);
+	// printLinkedList(test);
+	struct Node *test = reverse(head);
 	printLinkedList(test);
 
 	return 0;
